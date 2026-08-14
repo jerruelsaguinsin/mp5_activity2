@@ -5,66 +5,58 @@
 </head>
 <body>
 
-<h2>Search for a Value</h2>
+    <h2>Search for a Value</h2>
 
-<label>How many values?</label><br>
-<input type="number" id="count">
-<button onclick="createArray()">Enter Values</button>
+    <label>Enter array values (separated by commas and spaces):</label><br>
+    <input type="text" id="arrayInput"><br><br>
 
-<br><br>
+    <label>Enter value to search:</label><br>
+    <input type="text" id="searchValue"><br><br>
 
-<p id="arrayDisplay"></p>
+    <button onclick="searchArray()">Search</button>
 
-<label>Enter value to search:</label><br>
-<input type="text" id="searchValue">
-<button onclick="searchValue()">Search</button>
+    <p id="result"></p>
 
-<p id="result"></p>
+    <script>
+        function searchArray() {
+            let input = document.getElementById("arrayInput").value;
+            let search = document.getElementById("searchValue").value;
 
-<script>
-let arr = [];
+            let arr = [];
+            let word = "";
+            let count = 0;
 
-function createArray() {
-    let count = parseInt(document.getElementById("count").value);
+            for (let i = 0; i <= input.length; i++) {
+                if (i == input.length || input[i] == ",") {
+                    arr[count] = word;
+                    count++;
+                    word = "";
 
-    arr = [];
+                    if (input[i + 1] == " ") {
+                        i++;
+                    }
+                } else {
+                    word += input[i];
+                }
+            }
 
-    for (let i = 0; i < count; i++) {
-        arr[i] = prompt("Enter value " + (i + 1) + ":");
-    }
+            let found = false;
 
-    let output = "Array: ";
+            for (let i = 0; i < count; i++) {
+                if (arr[i] == search) {
+                    document.getElementById("result").innerHTML =
+                        "Value '" + search + "' found at index " + i;
+                    found = true;
+                    break;
+                }
+            }
 
-    for (let i = 0; i < arr.length; i++) {
-        output += arr[i];
-
-        if (i < arr.length - 1) {
-            output += ", ";
+            if (!found) {
+                document.getElementById("result").innerHTML =
+                    "Value '" + search + "' does not exist in the array.";
+            }
         }
-    }
-
-    document.getElementById("arrayDisplay").innerHTML = output;
-}
-
-function searchValue() {
-    let search = document.getElementById("searchValue").value;
-    let found = false;
-
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] == search) {
-            document.getElementById("result").innerHTML =
-                "Value \"" + search + "\" found at index " + i + ".";
-            found = true;
-            break;
-        }
-    }
-
-    if (found == false) {
-        document.getElementById("result").innerHTML =
-            "Value \"" + search + "\" does not exist in the array.";
-    }
-}
-</script>
+    </script>
 
 </body>
 </html>
