@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search for a Value</title>
+</head>
+<body>
+
+<h2>Search for a Value</h2>
+
+<label>Enter array values (separated by commas):</label><br>
+<input type="text" id="arrayInput">
+<br><br>
+
+<label>Enter value to search:</label><br>
+<input type="text" id="searchValue">
+<br><br>
+
+<button onclick="searchValue()">Search</button>
+
+<h3>Result:</h3>
+<p id="result"></p>
+
+<script>
+function searchValue() {
+    let input = document.getElementById("arrayInput").value;
+    let value = document.getElementById("searchValue").value;
+
+    // Validation
+    if (input == "" || value == "") {
+        alert("Please fill in both input fields.");
+        return;
+    }
+
+    let arr = input.split(",");
+
+    let found = false;
+    let index = -1;
+
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i].trim() == value) {
+            found = true;
+            index = i;
+            break;
+        }
+    }
+
+    if (found) {
+        document.getElementById("result").innerHTML =
+            'Value "' + value + '" found at index ' + index + '.';
+    } else {
+        document.getElementById("result").innerHTML =
+            'Value "' + value + '" does not exist in the array.';
+    }
+}
+</script>
+
+</body>
+</html>
