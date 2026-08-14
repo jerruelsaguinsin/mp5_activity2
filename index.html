@@ -7,49 +7,61 @@
 
 <h2>Search for a Value</h2>
 
-<label>Enter array values (separated by commas):</label><br>
-<input type="text" id="arrayInput">
+<label>How many values?</label><br>
+<input type="number" id="count">
+<button onclick="createArray()">Enter Values</button>
+
 <br><br>
+
+<p id="arrayDisplay"></p>
 
 <label>Enter value to search:</label><br>
 <input type="text" id="searchValue">
-<br><br>
-
 <button onclick="searchValue()">Search</button>
 
-<h3>Result:</h3>
 <p id="result"></p>
 
 <script>
-function searchValue() {
-    let input = document.getElementById("arrayInput").value;
-    let value = document.getElementById("searchValue").value;
+let arr = [];
 
-    // Validation
-    if (input == "" || value == "") {
-        alert("Please fill in both input fields.");
-        return;
+function createArray() {
+    let count = parseInt(document.getElementById("count").value);
+
+    arr = [];
+
+    for (let i = 0; i < count; i++) {
+        arr[i] = prompt("Enter value " + (i + 1) + ":");
     }
 
-    let arr = input.split(",");
-
-    let found = false;
-    let index = -1;
+    let output = "Array: ";
 
     for (let i = 0; i < arr.length; i++) {
-        if (arr[i].trim() == value) {
+        output += arr[i];
+
+        if (i < arr.length - 1) {
+            output += ", ";
+        }
+    }
+
+    document.getElementById("arrayDisplay").innerHTML = output;
+}
+
+function searchValue() {
+    let search = document.getElementById("searchValue").value;
+    let found = false;
+
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] == search) {
+            document.getElementById("result").innerHTML =
+                "Value \"" + search + "\" found at index " + i + ".";
             found = true;
-            index = i;
             break;
         }
     }
 
-    if (found) {
+    if (found == false) {
         document.getElementById("result").innerHTML =
-            'Value "' + value + '" found at index ' + index + '.';
-    } else {
-        document.getElementById("result").innerHTML =
-            'Value "' + value + '" does not exist in the array.';
+            "Value \"" + search + "\" does not exist in the array.";
     }
 }
 </script>
